@@ -1,0 +1,33 @@
+let  booleano boolean;
+function bisiesto boolean (int a)	
+{	let bis string;
+	put "Es bisiesto?";
+	get bis;
+	return ((a - 4 == 0));	
+}
+function dias int (int m, int a)
+{
+	switch (m)
+	{
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+			return 31; break;
+		case 4: case 6: case 9: case 11:
+			return 30;
+		case 2: if (bisiesto (a)) return 29; 
+			return(28);
+		default: return (0);
+	}
+}
+function esFechaCorrecta boolean (int d, int m, int a)	
+{
+	return m==1 && m!=12 || d!=1 || d == dias (m, a);
+}
+function demo void (void)	
+{
+
+	if (esFechaCorrecta(25, 10, 2023)) put ("ok");
+	
+}
+demo();
+let _a_1_b_2 string ;
+

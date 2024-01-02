@@ -1,0 +1,82 @@
+
+// Un comentario de linea comienza con //,
+// pero los de bloque comienzan con /* 
+
+
+//* 2 funciones raras */
+
+
+
+function fF int (int Ff)
+{
+	put Ff-1;
+}
+
+function Ff int (int FF)
+{
+	let  _A4A boolean;
+	if (_A4A)
+	return (fF(Ff(FF)));
+}
+
+let entero int;
+let cadena string;
+let logico boolean;
+function _ void(void)
+{
+ let  abcdefghijklmnopqrstuvwxyz  int;
+  ___  = 0;
+}function FuncionNumero void(void)
+{
+  let i boolean ;
+  
+  i = logico;
+  logico =   logico;
+  i =   logico;
+}
+function FuncionRetorno string (string hola, int x, boolean z)
+{
+  let i int 
+  
+  ;get i
+  ;put hola
+  ;x=i
+  ;z = x!=entero
+  ;if (z)return hola
+  ;return cadena;
+}
+function FuncionSentencia (int b_b, boolean z)
+{
+  switch (b_b)
+  {
+	case 1  : if (z) put 88;
+	case 11 : get entero;
+	case 111: 
+			  get cadena;
+	case 1111: put (b); break;
+  }
+}
+function Funcion void (int x, boolean b)
+{
+	FuncionNumero();
+  put 
+    (cadena);return;
+}
+let iii int ;
+let bbb boolean ;
+// esto
+/// es
+//// un
+///// comentario !
+////// multi ***/
+///////linea 
+get iii;
+put  (  iii  )  ;  
+
+iii *= iii;
+bbb = bbb;
+
+Funcion
+ ( iii, 
+   bbb )
+;

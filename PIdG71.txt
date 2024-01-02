@@ -1,0 +1,9 @@
+let a int;
+let   b  int  ;
+let bbb boolean ;
+a = 3;
+b=a					    		 	 	 	 	 	 	 	 	 	 	 	 	 	 	 													;
+if (a != b) b = 1;
+a = a - b;
+put a ;
+put b;

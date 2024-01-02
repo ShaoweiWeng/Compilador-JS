@@ -1,0 +1,18 @@
+let texto string;
+function print void(string m_s_g)
+{
+	put "Mensaje introducido:";
+	put m_s_g;
+}
+function pideTexto void ( void )
+{
+	put "Introduce un texto corto";
+	get texto;
+}
+pideTexto();
+let  textoAux  string;textoAux = texto;
+print
+ (
+ textoAux                                                    
+ )
+ ;

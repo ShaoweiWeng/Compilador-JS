@@ -1,0 +1,32 @@
+let texto string;
+function print void (string msg_)
+{
+	put msg_;
+}
+function pideTexto void (void)
+{
+	put "Introduce un texto";
+	get texto;
+}
+let aa_aa int;
+let iiii int;
+let s64 string;
+let bo boolean;
+
+function ffff int (void)
+{
+aa_aa=11  ; 
+
+aa_aa= iiii  -  33;
+
+return aa_aa;
+}	
+
+put  aa_aa ;
+
+if (bo) aa_aa=ll;
+	
+put s64;
+pideTexto();
+  print
+	(texto);

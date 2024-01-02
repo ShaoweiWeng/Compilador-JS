@@ -1,0 +1,19 @@
+let texto string;
+function pideTexto void(void)
+{
+	put "Escribe;
+	get texto;
+}
+function alert void(string msg)
+{
+	put msg;
+}
+
+
+pideTexto();
+let  textoAux  string;textoAux = texto;
+print
+ (
+ textoAux                                                    
+ )
+ ;

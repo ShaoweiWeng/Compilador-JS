@@ -72,7 +72,9 @@ public class Escribir {
      */
     public static void printTS(Integer numTS, Set<Entry<String, Integer>> lexemas) {
         String fichero = "TS.txt";
-        String encabezado = "Tabla Simbolos Grobal # " + numTS + " : \n";
+        String encabezado;
+        if (numTS == 0) encabezado = "Tabla Simbolos Grobal # " + numTS + " : \n";
+        else encabezado = "Tabla Simbolos Local # " + numTS + " : \n";
         String separador = "----------------------------------------------------------\n";
         String atributos = "ATRIBUTOS :\n";
         String[] lexOrdenado = ordenar(lexemas);

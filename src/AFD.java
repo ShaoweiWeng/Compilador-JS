@@ -8,7 +8,7 @@ public class AFD {
     // -------------------------------------------------------
     private HashMap<String, HashMap<String, String>> tablaTransiciones; // mapa con estado y sus posibles estados
                                                                         // siguientes
-    private Stack<TablaSimbolos> pilaTS; // tablas de simbolos siendo la TSAct la cima de la pila
+    public Stack<TablaSimbolos> pilaTS; // tablas de simbolos siendo la TSAct la cima de la pila
     private HashMap<String, String> palReservadas; // map <key = palabra reservada, value = formato token>
     private HashMap<String, String> token; // map <key = estado final, value = formato token>
     private HashSet<String> dels; // set delimitadores para hacer los o.c
@@ -150,8 +150,8 @@ public class AFD {
      * @param caracter Caracter leido del fichero utilizado para la transicion de
      *                 estados
      */
-    public String transicion(String caracter) {
-        String res = null;
+    public Pair<String, String> transicion(String caracter) {
+        Pair<String, String> res = new Pair<String, String>(null, null);
         String estadoFuturo, estadoActualAux;
         if ((estadoFuturo = tablaTransiciones.get(estadoActual).get(caracter)) == null) {
             gestorErr(caracter);
@@ -165,22 +165,22 @@ public class AFD {
                 Escribir.genToken(gen);
                 switch (estadoFuturo) {
                     case "11":
-                        res = "*=";
+                        res.setFirst("*=");
                         break;
                     case "12":
-                        res = "==";
+                        res.setFirst("==");
                         break;
                     case "13":
-                        res = "!=";
+                        res.setFirst("!=");
                         break;
                     case "14":
-                        res = "&&";
+                        res.setFirst("&&");
                         break;
                     case "15":
-                        res = "||";
+                        res.setFirst("||");
                         break;
                     default:
-                        res = caracter;
+                        res.setFirst(caracter);
                         break;
                 }
                 this.estadoActual = "S";
@@ -188,7 +188,7 @@ public class AFD {
                 switch (estadoFuturo) {
                     case "16":
                         Escribir.genToken(Escribir.ASIG);
-                        res = "=";
+                        res.setFirst("=");
                         this.estadoActual = "S";
                         reciclar = !dels.contains(caracter); // Si no es un delimitador, reciclar = true
                         break;
@@ -197,23 +197,48 @@ public class AFD {
                             gestorErr("MAXCAD");
                         else {
                             Escribir.genToken("CADENA", lex);
-                            res = "cad";
+                            res.setFirst("cad");
+                            res.setSecond(lex);
                         }
                         this.estadoActual = "S";
                         break;
                     case "18":
                         if ((gen = palReservadas.get(lex)) != null) { // Buscar palabras reservadas
                             Escribir.genToken(gen);
-                            res = lex;
+                            res.setFirst(lex);
                             this.estadoActual = "S";
                         } else { // Si no es ninguna palabra reservada entonces buscar en la tabla de simbolos
-                            Integer pos = pilaTS.peek().getID(lex);
-                            if (pos == null) { // Si no existe en la TS entonces incluirlo
-                                pos = pilaTS.peek().getPos();
-                                pilaTS.peek().insertar(lex);
+                            Integer pos = null;
+                            if (zonaDecl) {
+                                pos = pilaTS.peek().getID(lex);
+                                if (pos != null)
+                                    gestorErr("DUPID");
+                                else {
+                                    pos = pilaTS.peek().getPos();
+                                    pilaTS.peek().insertar(lex);
+                                    Escribir.genToken("ID", pos);
+                                    res.setFirst("id");
+                                    res.setSecond("" + pos);
+                                }
+                            } else {
+                                boolean encontrado = false;
+                                for (TablaSimbolos TS : pilaTS) {
+                                    pos = TS.getID(lex);
+                                    if (pos != null) {
+                                        encontrado = true;
+                                        break;
+                                    }
+                                }
+                                if (!encontrado) { // Si no se ha encontrado es decir que tenemos una declaracion
+                                                   // implicita
+                                    TablaSimbolos TSG = pilaTS.firstElement();
+                                    pos = TSG.getPos();
+                                    TSG.insertar(lex);
+                                }
+                                Escribir.genToken("ID", pos);
+                                res.setFirst("id");
+                                res.setSecond("" + pos);
                             }
-                            Escribir.genToken("ID", pos);
-                            res = "id";
                             this.estadoActual = "S";
                         }
                         reciclar = !dels.contains(caracter); // Si no es un delimitador, reciclar = true
@@ -223,7 +248,8 @@ public class AFD {
                             gestorErr("MAXENT");
                         else {
                             Escribir.genToken("ENT", this.num);
-                            res = "ent";
+                            res.setFirst("ent");
+                            res.setSecond("" + this.num);
                         }
                         this.estadoActual = "S";
                         reciclar = !dels.contains(caracter); // Si no es un delimitador, reciclar = true
@@ -283,6 +309,9 @@ public class AFD {
      */
     private void gestorErr(String caso) {
         switch (caso) {
+            case "DUPID":
+                System.err.println("Doble declaracion de la misma variable en la linea " + (this.nLineas - 1));
+                break;
             case "MAXCAD":
                 System.err.println("Cadena supera los 64 caracteres"); // ERROR MAXCAD
                 break;
@@ -293,34 +322,33 @@ public class AFD {
             case "\r":
                 switch (this.estadoActual) { // Errores debido a un salto de linea indebido
                     case "A":
-                        System.err.println("Transicion no valida en la línea " + (this.nLineas - 1) + " por CR tras *");
+                        System.err.println("Error en la línea " + (this.nLineas - 1) + " por CR tras *");
                         break;
                     case "K":
-                        System.err.println("Transicion no valida en la línea " + (this.nLineas - 1) + " por CR tras !");
+                        System.err.println("Error en la línea " + (this.nLineas - 1) + " por CR tras !");
                         break;
                     case "C":
-                        System.err.println("Transicion no valida en la línea " + (this.nLineas - 1) + " por CR tras &");
+                        System.err.println("Error en la línea " + (this.nLineas - 1) + " por CR tras &");
                         break;
                     case "D":
-                        System.err.println("Transicion no valida en la línea " + (this.nLineas - 1) + " por CR tras |");
+                        System.err.println("Error en la línea " + (this.nLineas - 1) + " por CR tras |");
                         break;
                     case "E":
                         System.err.println("Cadena no valida en la linea " + (this.nLineas - 1)
                                 + " se esperaba un \" pero se encontro CR");
                         break;
                     case "I":
-                        System.err.println("Transicion no valida en la línea " + (this.nLineas - 1) + " por CR tras /");
+                        System.err.println("Error en la línea " + (this.nLineas - 1) + " por CR tras /");
                         break;
                     case "F":
                         System.err
-                                .println("Transicion no valida en la línea " + (this.nLineas - 1) + " por CR tras \\");
+                                .println("Error en la línea " + (this.nLineas - 1) + " por CR tras \\");
                         break;
                 }
                 break;
             default: // Resto de casos de errores
-                System.err.println("Transicion no valida en la línea " + this.nLineas);
-                System.err.println("El estado actual es: " + this.estadoActual);
-                System.err.println("Y se ha leido el caracter: " + caso);
+                System.err.println("Error en la línea " + this.nLineas);
+                System.err.println("Tras la lectura del caracter: " + caso);
         }
         System.err.println("-------------------------------------"); // Separacion de errores
     }

@@ -1,15 +1,21 @@
 public class Atributos {
+    private String lex;
+    
     private String tipo;
-    private String despl;
-    private String numParam;
+    private Integer despl;
+    private Integer numParam;
     private String tipoParam;
-    private String modoParam;
     private String tipoRetorno;
     private String etiqFuncion;
+
     private String param;
-    
-    public void Atributos(){
-        
+
+    public String getLex() {
+        return lex;
+    }
+
+    public void setLex(String lex) {
+        this.lex = lex;
     }
 
     public String getTipo() {
@@ -20,19 +26,19 @@ public class Atributos {
         this.tipo = tipo;
     }
 
-    public String getDespl() {
+    public Integer getDespl() {
         return despl;
     }
 
-    public void setDespl(String despl) {
+    public void setDespl(Integer despl) {
         this.despl = despl;
     }
 
-    public String getNumParam() {
+    public Integer getNumParam() {
         return numParam;
     }
 
-    public void setNumParam(String numParam) {
+    public void setNumParam(Integer numParam) {
         this.numParam = numParam;
     }
 
@@ -42,14 +48,6 @@ public class Atributos {
 
     public void setTipoParam(String tipoParam) {
         this.tipoParam = tipoParam;
-    }
-
-    public String getModoParam() {
-        return modoParam;
-    }
-
-    public void setModoParam(String modoParam) {
-        this.modoParam = modoParam;
     }
 
     public String getTipoRetorno() {

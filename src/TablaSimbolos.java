@@ -7,11 +7,14 @@ public class TablaSimbolos {
     private Integer tsPos; // posicion de la tabla de simbolos
     private Integer desp; // posicion de la tabla de simbolos
 
-    public TablaSimbolos() {
+    private Integer TSID;
+
+    public TablaSimbolos(Integer TSID) {
         this.tsPos = 0;
         this.desp = 0;
         this.entrys = new HashMap<>();
         this.atributos = new ArrayList<>();
+        this.TSID = TSID;
     }
 
     public void insertar(String lex) {
@@ -27,14 +30,28 @@ public class TablaSimbolos {
     public Atributos getAtributos(Integer pos) {
         return atributos.get(pos);
     }
+
     public Integer getPos() {
         return tsPos;
     }
+
     public Integer getDesp() {
         return desp;
     }
 
+    public void setDesp(Integer desp) {
+        this.desp = desp;
+    }
+
     public HashMap<String, Integer> getEntrys() {
         return entrys;
+    }
+
+    public Integer getTSID() {
+        return TSID;
+    }
+
+    public void setTSID(Integer TSID) {
+        this.TSID = TSID;
     }
 }

@@ -1,6 +1,6 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Stack;
 
 public class AFD {
 
@@ -8,21 +8,20 @@ public class AFD {
     // -------------------------------------------------------
     private HashMap<String, HashMap<String, String>> tablaTransiciones; // mapa con estado y sus posibles estados
                                                                         // siguientes
-    private HashMap<String, Integer> tablaSimbolos; // tabla de simbolos con lex(el ID) como key y pos del linkedList
-                                                    // como value
+    private Stack<TablaSimbolos> pilaTS; // tablas de simbolos siendo la TSAct la cima de la pila
     private HashMap<String, String> palReservadas; // map <key = palabra reservada, value = formato token>
     private HashMap<String, String> token; // map <key = estado final, value = formato token>
     private HashSet<String> dels; // set delimitadores para hacer los o.c
     private final String delimitadores[] = { " ", "\t", "\n", "\r" };
     private final String estados[] = { "S", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K" };
     private final String transiciones[] = { "EOF", ",", ";", ":", "(", ")", "{", "}", "+", "-" };
-    private ArrayList<Atributos> atributos;
+
     private String estadoActual;
-    private Integer tsPos = 0; // posicion de la tabla de simbolos
+    // private Integer tsPos = 0; // posicion de la tabla de simbolos
     private String lex;
     private int num = 0, cont = 0;
     public int nLineas = 1;
-    public boolean reciclar = false;
+    public boolean reciclar = false, zonaDecl = false;
 
     /**
      * ------------------------ Constructor -------------------------
@@ -32,11 +31,10 @@ public class AFD {
     public AFD() {
         this.estadoActual = "S";
         this.tablaTransiciones = new HashMap<>();
-        this.tablaSimbolos = new HashMap<>();
+        this.pilaTS = new Stack<>();
         this.palReservadas = new HashMap<>();
         this.token = new HashMap<>();
         this.dels = new HashSet<>();
-        this.atributos = new ArrayList<>();
         int i = 1, j = 2, k = 0;
         for (String tokens : Escribir.tokens)
             token.put("" + j++, tokens);
@@ -209,12 +207,10 @@ public class AFD {
                             res = lex;
                             this.estadoActual = "S";
                         } else { // Si no es ninguna palabra reservada entonces buscar en la tabla de simbolos
-                            Integer pos = tablaSimbolos.get(lex);
+                            Integer pos = pilaTS.peek().getID(lex);
                             if (pos == null) { // Si no existe en la TS entonces incluirlo
-                                pos = this.tsPos;
-                                tablaSimbolos.put(lex, pos);
-                                atributos.add(pos, new Atributos());
-                                this.tsPos++;
+                                pos = pilaTS.peek().getPos();
+                                pilaTS.peek().insertar(lex);
                             }
                             Escribir.genToken("ID", pos);
                             res = "id";
@@ -333,7 +329,7 @@ public class AFD {
      * -------------- getTS ----------------
      * Getter de la tabla de simbolos.
      */
-    public HashMap<String, Integer> getTS() {
-        return tablaSimbolos;
+    public Stack<TablaSimbolos> getTS() {
+        return pilaTS;
     }
 }

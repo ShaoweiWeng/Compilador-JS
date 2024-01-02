@@ -93,6 +93,9 @@ public class ASt {
     private final String p2[] = { "57", "P", "F" };
     private final String p3[] = { "58" };
 
+    // I gramatica aumentada
+    private final String i1[] = { "0", "P" };
+
     public ASt(AFD AL) {
         this.AL = AL;
         this.pila = new Stack<>();
@@ -261,6 +264,17 @@ public class ASt {
         tablaDescendente.get("Y").put("||", y2);
         tablaDescendente.get("Y").put("!=", y2);
         tablaDescendente.get("Y").put("==", y2);
+        // i
+        tablaDescendente.get("I").put("break", i1);
+        tablaDescendente.get("I").put("function", i1);
+        tablaDescendente.get("I").put("get", i1);
+        tablaDescendente.get("I").put("if", i1);
+        tablaDescendente.get("I").put("let", i1);
+        tablaDescendente.get("I").put("put", i1);
+        tablaDescendente.get("I").put("return", i1);
+        tablaDescendente.get("I").put("switch", i1);
+        tablaDescendente.get("I").put("id", i1);
+        tablaDescendente.get("I").put("EOF", i1);
     }
 
     public void analisis(File file) {
@@ -274,10 +288,11 @@ public class ASt {
                         pila.pop();
                         sigTok = lector(archivo);
                     } else {
-                        System.err.println("ERROR SINTACTICO EN LA LINEA: " + AL.nLineas + " no se esperaba: " + sigTok);
+                        System.err
+                                .println("ERROR SINTACTICO EN LA LINEA: " + AL.nLineas + " no se esperaba: " + sigTok);
                         pila.pop();
                     }
-                //else if (accion semantica)
+                    // else if (accion semantica)
                 } else { // Tratamiento de No Terminal
                     if ((listPila = tablaDescendente.get(pila.peek()).get(sigTok)) != null) {
                         pila.pop();
@@ -286,7 +301,8 @@ public class ASt {
                             pila.push(listPila[i]);
                         }
                     } else {
-                        System.err.println("ERROR SINTACTICO EN LA LINEA: " + AL.nLineas + " no se esperaba: " + sigTok);
+                        System.err
+                                .println("ERROR SINTACTICO EN LA LINEA: " + AL.nLineas + " no se esperaba: " + sigTok);
                         pila.pop();
                         if (pila.peek().equals("EOF")) {
                             pila.push("P");

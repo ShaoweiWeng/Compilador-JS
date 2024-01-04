@@ -104,12 +104,12 @@ public class AStSe {
     private final String c1[] = { "54", "{58}", "C", "B" };
     private final String c2[] = { "55", "{59}" };
     // P
-    private final String p1[] = { "56", "P", "B" };
-    private final String p2[] = { "57", "P", "F" };
+    private final String p1[] = { "56", "{60}", "P", "B" };
+    private final String p2[] = { "57", "{60}", "P", "F" };
     private final String p3[] = { "58" };
 
     // I gramatica aumentada
-    private final String i1[] = { "0", "{61}", "P", "{60}" };
+    private final String i1[] = { "0", "{62}", "P", "{61}" };
 
     public AStSe(AFD AL) {
         this.AL = AL;
@@ -292,7 +292,7 @@ public class AStSe {
         tablaDescendente.get("I").put("id", i1);
         tablaDescendente.get("I").put("EOF", i1);
 
-        for (int i = 1; i <= 60; i++)
+        for (int i = 1; i <= 62; i++)
             accionesSem.put("{" + i + "}", i);
 
     }
@@ -560,22 +560,28 @@ public class AStSe {
             case 61:
                 SemAct61();
                 break;
+            case 62:
+                SemAct62();
+                break;
         }
     }
 
     private void SemAct1() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        popX(3);
     }
 
     private void SemAct2() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        popX(4);
     }
 
     private void SemAct3() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        popX(3);
     }
 
     private void SemAct4() {
@@ -593,6 +599,7 @@ public class AStSe {
             S.setTipo(OK);
         else
             S.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct5() {
@@ -603,6 +610,7 @@ public class AStSe {
             S.setTipo(OK);
         else
             S.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct6() {
@@ -614,15 +622,18 @@ public class AStSe {
             S.setTipo(OK);
         else
             S.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct7() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        popX(3);
     }
 
     private void SemAct8() {
         pilaAux.elementAt(pilaAux.size() - 3).getSecond().setTipo(OK);
+        popX(2);
     }
 
     private void SemAct9() {
@@ -634,6 +645,7 @@ public class AStSe {
             E.setTipo(R.getTipo());
         else
             E.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct10() {
@@ -645,6 +657,7 @@ public class AStSe {
             N.setTipo(LOG);
         else
             N.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct11() {
@@ -660,6 +673,7 @@ public class AStSe {
             R.setTipo(U.getTipo());
         else
             R.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct13() {
@@ -671,6 +685,7 @@ public class AStSe {
             M.setTipo(LOG);
         else
             M.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct14() {
@@ -688,6 +703,7 @@ public class AStSe {
             U.setTipo(LOG);
         else
             U.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct16() {
@@ -699,6 +715,7 @@ public class AStSe {
             O.setTipo(ENT);
         else
             O.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct17() {
@@ -710,6 +727,7 @@ public class AStSe {
             O.setTipo(ENT);
         else
             O.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct18() {
@@ -725,6 +743,7 @@ public class AStSe {
             D.setTipo(V.getTipo());
         else
             D.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct20() {
@@ -736,6 +755,7 @@ public class AStSe {
             W.setTipo(ENT);
         else
             W.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct21() {
@@ -747,6 +767,7 @@ public class AStSe {
             W.setTipo(ENT);
         else
             W.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct22() {
@@ -768,11 +789,13 @@ public class AStSe {
             V.setTipo(id.getTipo());
         else
             V.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct24() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        popX(3);
     }
 
     private void SemAct25() {
@@ -782,22 +805,27 @@ public class AStSe {
     private void SemAct26() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        popX(3);
     }
 
     private void SemAct27() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(ENT);
+        popX(1);
     }
 
     private void SemAct28() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(CAD);
+        popX(1);
     }
 
     private void SemAct29() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(LOG);
+        popX(1);
     }
 
     private void SemAct30() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(LOG);
+        popX(1);
     }
 
     private void SemAct31() {
@@ -811,6 +839,7 @@ public class AStSe {
             L.setTipo(E.getTipo() + "*" + Q.getTipo());
         else
             L.setTipo(ERROR);
+        popX(2);
     }
 
     private void SemAct32() {
@@ -828,6 +857,7 @@ public class AStSe {
             Q.setTipo(E.getTipo() + "*" + Q1.getTipo());
         else
             Q.setTipo(ERROR);
+        popX(3);
     }
 
     private void SemAct34() {
@@ -837,6 +867,7 @@ public class AStSe {
     private void SemAct35() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 1).getSecond().getTipo());
+        popX(1);
     }
 
     private void SemAct36() {
@@ -858,6 +889,7 @@ public class AStSe {
         id.setTipo(T.getTipo());
         id.setDespl(TSAct.getDesp());
         TSAct.setDesp(TSAct.getDesp() + T.getDespl());
+        popX(4);
     }
 
     private void SemAct39() {
@@ -869,11 +901,13 @@ public class AStSe {
             B.setTipo(S.getTipo());
         else
             B.setTipo(ERROR);
+        popX(5);
     }
 
     private void SemAct40() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 1).getSecond().getTipo());
+        popX(1);
     }
 
     private void SemAct41() {
@@ -885,6 +919,7 @@ public class AStSe {
             B.setTipo(G.getTipo());
         else
             B.setTipo(ERROR);
+        popX(7);
     }
 
     private void SemAct42() {
@@ -900,11 +935,13 @@ public class AStSe {
             G.setTipo(C.getTipo());
         else
             G.setTipo(ERROR);
+        popX(5);
     }
 
     private void SemAct43() {
         pilaAux.elementAt(pilaAux.size() - 4).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 1).getSecond().getTipo());
+        popX(3);
     }
 
     private void SemAct44() {
@@ -913,18 +950,20 @@ public class AStSe {
 
     private void SemAct45() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(ENT);
-        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setDespl(2);
+        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setDespl(1);
+        popX(1);
     }
 
     private void SemAct46() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(LOG);
-        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setDespl(2);
+        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setDespl(1);
+        popX(1);
     }
 
     private void SemAct47() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(CAD);
-        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setDespl(128);
-
+        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setDespl(64);
+        popX(1);
     }
 
     private void SemAct48() {
@@ -968,15 +1007,18 @@ public class AStSe {
 
         TablaSimbolos ts = AL.pilaTS.pop();
         Escribir.printTS(ts.getTSID(), ts.getEntrys().entrySet());
+        popX(9);
     }
 
     private void SemAct52() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond()
                 .setTipo(pilaAux.elementAt(pilaAux.size() - 1).getSecond().getTipo());
+        popX(1);
     }
 
     private void SemAct53() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(VOID);
+        popX(1);
     }
 
     private void SemAct54() {
@@ -995,10 +1037,12 @@ public class AStSe {
         id.setDespl(TSAct.getDesp());
         TSAct.setDesp(TSAct.getDesp() + T.getDespl());
         this.numParam += 1;
+        popX(3);
     }
 
     private void SemAct55() {
         pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(VOID);
+        popX(1);
     }
 
     private void SemAct56() {
@@ -1017,7 +1061,7 @@ public class AStSe {
         id.setDespl(TSAct.getDesp());
         TSAct.setDesp(TSAct.getDesp() + T.getDespl());
         this.numParam += 1;
-
+        popX(4);
     }
 
     private void SemAct57() {
@@ -1033,7 +1077,7 @@ public class AStSe {
             C.setTipo(B.getTipo());
         else
             C.setTipo(C1.getTipo());
-
+        popX(2);
     }
 
     private void SemAct59() {
@@ -1041,13 +1085,18 @@ public class AStSe {
     }
 
     private void SemAct60() {
+        popX(2);        
+    }
+
+    private void SemAct61() {
         AL.pilaTS.push(new TablaSimbolos(TSId));
         TSId++;
         AL.zonaDecl = false;
     }
 
-    private void SemAct61() {
+    private void SemAct62() {
         TablaSimbolos ts = AL.pilaTS.pop();
         Escribir.printTS(ts.getTSID(), ts.getEntrys().entrySet());
+        popX(1);
     }
 }

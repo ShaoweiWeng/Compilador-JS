@@ -222,13 +222,21 @@ public class AFD {
                                 }
                             } else {
                                 boolean encontrado = false;
-                                for (TablaSimbolos TS : pilaTS) {
+                                TablaSimbolos TS;
+                                for (int i = pilaTS.size()-1; i >= 0 && !encontrado ; i--) {
+                                    TS = pilaTS.elementAt(i);
+                                    pos = TS.getID(lex);
+                                    if (pos != null) {
+                                        encontrado = true;
+                                    }
+                                }
+                                /*for (TablaSimbolos TS : pilaTS) { //En qué orden va este for-Each?? deberia primero local y luego global
                                     pos = TS.getID(lex);
                                     if (pos != null) {
                                         encontrado = true;
                                         break;
                                     }
-                                }
+                                }*/
                                 if (!encontrado) { // Si no se ha encontrado es decir que tenemos una declaracion
                                                    // implicita
                                     TablaSimbolos TSG = pilaTS.firstElement();
@@ -311,9 +319,11 @@ public class AFD {
         switch (caso) {
             case "DUPID":
                 System.err.println("Doble declaracion de la misma variable en la linea " + (this.nLineas - 1));
+                //System.err.println("Doble declaracion de la variable " + lex + " en la linea " + (this.nLineas - 1)); //Sugerencia
                 break;
             case "MAXCAD":
                 System.err.println("Cadena supera los 64 caracteres"); // ERROR MAXCAD
+                //System.err.println("Cadena " + lex + " supera los 64 caracteres"); // ERROR MAXCAD // Sugerencia
                 break;
             case "MAXENT":
                 System.err.println("Entero fuera de rango, el numero es mayor que 2^15"); // ERROR MAXENT

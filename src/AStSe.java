@@ -584,7 +584,8 @@ public class AStSe {
         popX(3);
     }
 
-    private void SemAct4() {
+    private boolean SemAct4() {
+        boolean checkErr = false;
         Atributos J = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos id = AL.pilaTS.peek()
                 .getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
@@ -593,36 +594,55 @@ public class AStSe {
         if (id.getTipo().equals(FUNC)) {
             if (id.getTipoParam().equals(J.getTipo()))
                 S.setTipo(OK);
-            else
+            else {
                 S.setTipo(ERROR);
+                System.err.println("Para la funcion: " + id.getLex() +
+                 " se esperaban los parametros: " + id.getTipoParam() + " en vez de: " + J.getTipo());
+                checkErr=true;
+            }
         } else if (id.getTipo().equals(J.getTipo()))
             S.setTipo(OK);
-        else
+        else {
             S.setTipo(ERROR);
+            System.err.println("Para la variable: " + id.getLex() + 
+            " se esperaba el tipo: " + id.getTipo() + " en vez de: " + J.getTipo());
+            checkErr=true;
+        }   
         popX(2);
+        return checkErr;
     }
 
-    private void SemAct5() {
+    private boolean SemAct5() {
+        boolean checkErr = false;
         Atributos E = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos S = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (E.getTipo().equals(ENT) || E.getTipo().equals(CAD))
             S.setTipo(OK);
-        else
+        else {
             S.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo cadena o entero, no: " + E.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
-    private void SemAct6() {
+    private boolean SemAct6() {
+        boolean checkErr = false;
         Atributos id = AL.pilaTS.peek()
                 .getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
         Atributos S = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (id.getTipo().equals(ENT) || id.getTipo().equals(CAD))
             S.setTipo(OK);
-        else
+        else {
             S.setTipo(ERROR);
+            System.err.println("Se esperaba que la variable: "+id.getLex()+" fuera de tipo cadena o entero, no: " + id.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
     private void SemAct7() {
@@ -636,145 +656,196 @@ public class AStSe {
         popX(2);
     }
 
-    private void SemAct9() {
+    private boolean SemAct9() {
+        boolean checkErr = false;
         Atributos N = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos R = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos E = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
 
         if (N.getTipo().equals(OK) || (R.getTipo().equals(N.getTipo()) && N.getTipo().equals(LOG)))
             E.setTipo(R.getTipo());
-        else
+        else {
             E.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + R.getTipo());
+            checkErr=true;
+        }
         popX(2);
+        return checkErr;
     }
 
-    private void SemAct10() {
+    private boolean SemAct10() {
+        boolean checkErr = false;
         Atributos N1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos R = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos N = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (R.getTipo().equals(LOG) && (N1.getTipo().equals(OK) || N1.getTipo().equals(LOG)))
             N.setTipo(LOG);
-        else
+        else {
             N.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + R.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
     private void SemAct11() {
         pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(OK);
     }
 
-    private void SemAct12() {
+    private boolean SemAct12() {
+        boolean checkErr = false;
         Atributos M = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos U = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos R = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
 
         if (M.getTipo().equals(OK) || (U.getTipo().equals(M.getTipo()) && M.getTipo().equals(LOG)))
             R.setTipo(U.getTipo());
-        else
+        else {
             R.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + U.getTipo());
+            checkErr=true;
+        }
         popX(2);
+        return checkErr;
     }
 
-    private void SemAct13() {
+    private boolean SemAct13() {
+        boolean checkErr = false;
         Atributos M1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos U = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos M = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (U.getTipo().equals(LOG) && (M1.getTipo().equals(OK) || M1.getTipo().equals(LOG)))
             M.setTipo(LOG);
-        else
+        else {
             M.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + U.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
     private void SemAct14() {
         pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(OK);
     }
 
-    private void SemAct15() {
+    private boolean SemAct15() {
+        boolean checkErr = false;
         Atributos O = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos D = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos U = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
 
         if (O.getTipo().equals(OK))
             U.setTipo(D.getTipo());
-        else if (D.getTipo().equals(O.getTipo()) && O.getTipo().equals(ENT))
+        else if (D.getTipo().equals(O.getTipo()) && D.getTipo().equals(ENT))
             U.setTipo(LOG);
-        else
+        else {
             U.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo());
+            checkErr=true;
+        }
         popX(2);
+        return checkErr;
     }
 
-    private void SemAct16() {
+    private boolean SemAct16() {
+        boolean checkErr = false;
         Atributos O1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos D = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos O = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (D.getTipo().equals(ENT) && (O1.getTipo().equals(OK) || O1.getTipo().equals(ENT)))
             O.setTipo(ENT);
-        else
+        else {
             O.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
-    private void SemAct17() {
+    private boolean SemAct17() {
+        boolean checkErr = false;
         Atributos O1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos D = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos O = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (D.getTipo().equals(ENT) && (O1.getTipo().equals(OK) || O1.getTipo().equals(ENT)))
             O.setTipo(ENT);
-        else
+        else {
             O.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
     private void SemAct18() {
         pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(OK);
     }
 
-    private void SemAct19() {
+    private boolean SemAct19() {
+        boolean checkErr = false;
         Atributos W = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos V = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos D = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
 
-        if (W.getTipo().equals(OK) || (V.getTipo().equals(W.getTipo()) && W.getTipo().equals(ENT)))
+        if (W.getTipo().equals(OK) || (V.getTipo().equals(W.getTipo()) && V.getTipo().equals(ENT)))
             D.setTipo(V.getTipo());
-        else
-            D.setTipo(ERROR);
+        else {
+                D.setTipo(ERROR);
+                System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo());
+                checkErr=true;
+        } 
         popX(2);
+        return checkErr;
     }
 
-    private void SemAct20() {
+    private boolean SemAct20() {
+        boolean checkErr = false;
         Atributos W1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos V = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos W = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (V.getTipo().equals(ENT) && (W1.getTipo().equals(OK) || W1.getTipo().equals(ENT)))
             W.setTipo(ENT);
-        else
+        else {
             W.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
-    private void SemAct21() {
+    private boolean SemAct21() {
+        boolean checkErr = false;
         Atributos W1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos V = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos W = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (V.getTipo().equals(ENT) && (W1.getTipo().equals(OK) || W1.getTipo().equals(ENT)))
             W.setTipo(ENT);
-        else
+        else {
             W.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo());
+            checkErr=true;
+        }
         popX(3);
+        return checkErr;
     }
 
     private void SemAct22() {
         pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(OK);
     }
 
-    private void SemAct23() {
+    private boolean SemAct23() {
+        boolean checkErr = false;
         Atributos Y = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos id = AL.pilaTS.peek()
                 .getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
@@ -783,13 +854,21 @@ public class AStSe {
         if (id.getTipo().equals(FUNC)) {
             if (id.getTipoParam().equals(Y.getTipo()))
                 V.setTipo(id.getTipoRetorno());
-            else
+            else {
                 V.setTipo(ERROR);
+                System.err.println("Para la funcion: " + id.getLex() +
+                " se esperaban los parametros: " + id.getTipoParam() + " en vez de: " + Y.getTipo());
+                checkErr=true;
+            }
         } else if (Y.getTipo().equals(OK))
             V.setTipo(id.getTipo());
-        else
+        else {
             V.setTipo(ERROR);
+            System.err.println("Para la variable: " + id.getLex() + " no se esperaban parametros");
+            checkErr=true;
+        }
         popX(2);
+        return checkErr;
     }
 
     private void SemAct24() {
@@ -828,7 +907,8 @@ public class AStSe {
         popX(1);
     }
 
-    private void SemAct31() {
+    private boolean SemAct31() {
+        boolean checkErr = false;
         Atributos Q = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos E = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos L = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
@@ -837,16 +917,21 @@ public class AStSe {
             L.setTipo(E.getTipo());
         } else if (!E.getTipo().equals(ERROR) && !Q.getTipo().equals(ERROR))
             L.setTipo(E.getTipo() + "*" + Q.getTipo());
-        else
+        else {
             L.setTipo(ERROR);
+            System.err.println("Error al recibir expresion defectuosa");
+            checkErr = true;
+        }
         popX(2);
+        return checkErr;
     }
 
     private void SemAct32() {
         pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(VOID);
     }
 
-    private void SemAct33() {
+    private boolean SemAct33() {
+        boolean checkErr = false;
         Atributos Q1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos E = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos Q = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
@@ -855,9 +940,13 @@ public class AStSe {
             Q.setTipo(E.getTipo());
         } else if (!E.getTipo().equals(ERROR) && !Q1.getTipo().equals(ERROR))
             Q.setTipo(E.getTipo() + "*" + Q1.getTipo());
-        else
+        else {
             Q.setTipo(ERROR);
+            System.err.println("Error al recibir expresion defectuosa");
+            checkErr = true;
+        }
         popX(3);
+        return checkErr;
     }
 
     private void SemAct34() {
@@ -892,16 +981,21 @@ public class AStSe {
         popX(4);
     }
 
-    private void SemAct39() {
+    private boolean SemAct39() {
+        boolean checkErr = false;
         Atributos S = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos E = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
         Atributos B = pilaAux.elementAt(pilaAux.size() - 6).getSecond();
 
         if (E.getTipo().equals(LOG))
             B.setTipo(S.getTipo());
-        else
+        else {
             B.setTipo(ERROR);
+            System.err.println("Se esperaba una condicion de tipo logico, no: " + E.getTipo());
+            checkErr = true;
+        }
         popX(5);
+        return checkErr;
     }
 
     private void SemAct40() {
@@ -910,16 +1004,21 @@ public class AStSe {
         popX(1);
     }
 
-    private void SemAct41() {
+    private boolean SemAct41() {
+        boolean checkErr = false;
         Atributos G = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos E = pilaAux.elementAt(pilaAux.size() - 5).getSecond();
         Atributos B = pilaAux.elementAt(pilaAux.size() - 8).getSecond();
 
         if (E.getTipo().equals(ENT))
             B.setTipo(G.getTipo());
-        else
+        else {
             B.setTipo(ERROR);
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + E.getTipo());
+            checkErr = true;
+        }
         popX(7);
+        return checkErr;
     }
 
     private void SemAct42() {

@@ -19,7 +19,9 @@ public class TablaSimbolos {
 
     public void insertar(String lex) {
         entrys.put(lex, this.tsPos);
-        atributos.add(this.tsPos, new Atributos());
+        Atributos atrib = new Atributos();
+        atrib.setLex(lex);
+        atributos.add(this.tsPos, atrib);
         this.tsPos++;
     }
 

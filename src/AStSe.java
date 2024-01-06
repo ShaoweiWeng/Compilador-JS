@@ -597,7 +597,7 @@ public class AStSe {
             else {
                 S.setTipo(ERROR);
                 System.err.println("Para la funcion: " + id.getLex() +
-                 " se esperaban los parametros: " + id.getTipoParam() + " en vez de: " + J.getTipo());
+                 " se esperaban los parametros: " + id.getTipoParam() + " en vez de: " + J.getTipo() + ". En la linea: " + AL.nLineas);
                 checkErr=true;
             }
         } else if (id.getTipo().equals(J.getTipo()))
@@ -605,7 +605,7 @@ public class AStSe {
         else {
             S.setTipo(ERROR);
             System.err.println("Para la variable: " + id.getLex() + 
-            " se esperaba el tipo: " + id.getTipo() + " en vez de: " + J.getTipo());
+            " se esperaba el tipo: " + id.getTipo() + " en vez de: " + J.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }   
         popX(2);
@@ -621,7 +621,7 @@ public class AStSe {
             S.setTipo(OK);
         else {
             S.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo cadena o entero, no: " + E.getTipo());
+            System.err.println("Se esperaba una expresion de tipo cadena o entero, no: " + E.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -638,7 +638,8 @@ public class AStSe {
             S.setTipo(OK);
         else {
             S.setTipo(ERROR);
-            System.err.println("Se esperaba que la variable: "+id.getLex()+" fuera de tipo cadena o entero, no: " + id.getTipo());
+            System.err.println("Se esperaba que la variable: " + id.getLex() +
+            " fuera de tipo cadena o entero, no: " + id.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -666,7 +667,7 @@ public class AStSe {
             E.setTipo(R.getTipo());
         else {
             E.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo logico, no: " + R.getTipo());
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + R.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(2);
@@ -683,7 +684,7 @@ public class AStSe {
             N.setTipo(LOG);
         else {
             N.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo logico, no: " + R.getTipo());
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + R.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -704,7 +705,7 @@ public class AStSe {
             R.setTipo(U.getTipo());
         else {
             R.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo logico, no: " + U.getTipo());
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + U.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(2);
@@ -721,7 +722,7 @@ public class AStSe {
             M.setTipo(LOG);
         else {
             M.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo logico, no: " + U.getTipo());
+            System.err.println("Se esperaba una expresion de tipo logico, no: " + U.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -744,7 +745,7 @@ public class AStSe {
             U.setTipo(LOG);
         else {
             U.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo());
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(2);
@@ -761,7 +762,7 @@ public class AStSe {
             O.setTipo(ENT);
         else {
             O.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo());
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -778,7 +779,7 @@ public class AStSe {
             O.setTipo(ENT);
         else {
             O.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo());
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + D.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -799,7 +800,7 @@ public class AStSe {
             D.setTipo(V.getTipo());
         else {
                 D.setTipo(ERROR);
-                System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo());
+                System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo() + ". En la linea: " + AL.nLineas);
                 checkErr=true;
         } 
         popX(2);
@@ -816,7 +817,7 @@ public class AStSe {
             W.setTipo(ENT);
         else {
             W.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo());
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -833,7 +834,7 @@ public class AStSe {
             W.setTipo(ENT);
         else {
             W.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo());
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + V.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(3);
@@ -857,14 +858,14 @@ public class AStSe {
             else {
                 V.setTipo(ERROR);
                 System.err.println("Para la funcion: " + id.getLex() +
-                " se esperaban los parametros: " + id.getTipoParam() + " en vez de: " + Y.getTipo());
+                " se esperaban los parametros: " + id.getTipoParam() + " en vez de: " + Y.getTipo() + ". En la linea: " + AL.nLineas);
                 checkErr=true;
             }
         } else if (Y.getTipo().equals(OK))
             V.setTipo(id.getTipo());
         else {
             V.setTipo(ERROR);
-            System.err.println("Para la variable: " + id.getLex() + " no se esperaban parametros");
+            System.err.println("Para la variable: " + id.getLex() + " no se esperaban parametros" + ". En la linea: " + AL.nLineas);
             checkErr=true;
         }
         popX(2);
@@ -919,7 +920,7 @@ public class AStSe {
             L.setTipo(E.getTipo() + "*" + Q.getTipo());
         else {
             L.setTipo(ERROR);
-            System.err.println("Error al recibir expresion defectuosa");
+            System.err.println("Error al recibir expresion defectuosa" + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }
         popX(2);
@@ -942,7 +943,7 @@ public class AStSe {
             Q.setTipo(E.getTipo() + "*" + Q1.getTipo());
         else {
             Q.setTipo(ERROR);
-            System.err.println("Error al recibir expresion defectuosa");
+            System.err.println("Error al recibir expresion defectuosa" + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }
         popX(3);
@@ -991,7 +992,7 @@ public class AStSe {
             B.setTipo(S.getTipo());
         else {
             B.setTipo(ERROR);
-            System.err.println("Se esperaba una condicion de tipo logico, no: " + E.getTipo());
+            System.err.println("Se esperaba una condicion de tipo logico, no: " + E.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }
         popX(5);
@@ -1014,7 +1015,7 @@ public class AStSe {
             B.setTipo(G.getTipo());
         else {
             B.setTipo(ERROR);
-            System.err.println("Se esperaba una expresion de tipo entero, no: " + E.getTipo());
+            System.err.println("Se esperaba una expresion de tipo entero, no: " + E.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }
         popX(7);
@@ -1035,7 +1036,7 @@ public class AStSe {
             G.setTipo(C.getTipo());
         else {
             G.setTipo(ERROR);
-            System.err.println("Error al recibir expresiones erroneas");
+            System.err.println("Error al recibir expresiones erroneas" + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }
         popX(5);
@@ -1110,7 +1111,7 @@ public class AStSe {
         else {
             F.setTipo(ERROR);
             System.err.println("Se esperaban los un valor de retorno del tipo: " + H.getTipo()
-                             + " pero la función retorna: " + C.getTipo());
+                             + " pero la función retorna: " + C.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }
 

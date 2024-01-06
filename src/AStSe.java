@@ -1021,7 +1021,8 @@ public class AStSe {
         return checkErr;
     }
 
-    private void SemAct42() {
+    private boolean SemAct42() {
+        boolean checkErr = false;
         Atributos G1 = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
         Atributos C = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos G = pilaAux.elementAt(pilaAux.size() - 6).getSecond();
@@ -1032,9 +1033,13 @@ public class AStSe {
             G.setTipo(G1.getTipo());
         else if (G1.getTipo().equals(OK) || C.getTipo().equals(G1.getTipo()))
             G.setTipo(C.getTipo());
-        else
+        else {
             G.setTipo(ERROR);
+            System.err.println("Error al recibir expresiones erroneas");
+            checkErr = true;
+        }
         popX(5);
+        return checkErr;
     }
 
     private void SemAct43() {
@@ -1094,19 +1099,25 @@ public class AStSe {
         id.setEtiqFuncion("Et_" + id.getLex());
     }
 
-    private void SemAct51() {
+    private boolean SemAct51() {
+        boolean checkErr = false;
         Atributos C = pilaAux.elementAt(pilaAux.size() - 2).getSecond();
         Atributos H = pilaAux.elementAt(pilaAux.size() - 7).getSecond();
         Atributos F = pilaAux.elementAt(pilaAux.size() - 10).getSecond();
 
         if ((H.getTipo().equals(VOID) && C.getTipo().equals(OK) || H.getTipo().equals(C.getTipo())))
             F.setTipo(OK);
-        else
+        else {
             F.setTipo(ERROR);
+            System.err.println("Se esperaban los un valor de retorno del tipo: " + H.getTipo()
+                             + " pero la función retorna: " + C.getTipo());
+            checkErr = true;
+        }
 
         TablaSimbolos ts = AL.pilaTS.pop();
         Escribir.printTS(ts.getTSID(), ts.getEntrys().entrySet());
         popX(9);
+        return checkErr;
     }
 
     private void SemAct52() {

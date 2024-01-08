@@ -109,7 +109,7 @@ public class AStSe {
     private final String p3[] = { "58" };
 
     // I gramatica aumentada
-    private final String i1[] = { "0", "{62}", "P" };
+    private final String i1[] = { "59", "{62}", "P" };
 
     public AStSe(AFD AL) {
         this.AL = AL;

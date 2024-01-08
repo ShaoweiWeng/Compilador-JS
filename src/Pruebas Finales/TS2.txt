@@ -2,20 +2,10 @@ Tabla Simbolos Grobal # 0 :
  * LEXEMA : 'a'
 ATRIBUTOS :
  + Tipo : 'entero'
- + Despl : 0
+ + Despl : 1
 ----------------------------------------------------------
  * LEXEMA : 'b'
 ATRIBUTOS :
  + Tipo : 'entero'
  + Despl : 1
-----------------------------------------------------------
- * LEXEMA : 'bbb'
-ATRIBUTOS :
- + Tipo : 'logico'
- + Despl : 2
-----------------------------------------------------------
- * LEXEMA : 'c'
-ATRIBUTOS :
- + Tipo : 'logico'
- + Despl : 3
 ----------------------------------------------------------

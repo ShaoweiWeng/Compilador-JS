@@ -1,0 +1,9 @@
+<ID,0>
+<ASIG,>
+<ENT,3>
+<PCOMA,>
+<ID,1>
+<ASIG,>
+<ID,0>
+<PCOMA,>
+<EOF,>

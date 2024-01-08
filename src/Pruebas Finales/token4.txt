@@ -1,0 +1,13 @@
+<ID,0>
+<ASIG,>
+<ID,0>
+<SUM,>
+<ID,1>
+<PCOMA,>
+<PUT,>
+<ID,0>
+<PCOMA,>
+<PUT,>
+<ID,1>
+<PCOMA,>
+<EOF,>

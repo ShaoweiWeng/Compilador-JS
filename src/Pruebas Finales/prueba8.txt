@@ -1,0 +1,6 @@
+let a int;
+let   b  int  ;
+let bbb boolean ;
+a = 3;
+
+

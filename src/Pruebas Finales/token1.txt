@@ -1,0 +1,17 @@
+<LET,>
+<ID,0>
+<INT,>
+<PCOMA,>
+<LET,>
+<ID,1>
+<INT,>
+<PCOMA,>
+<LET,>
+<ID,2>
+<BOOL,>
+<PCOMA,>
+<ID,0>
+<ASIG,>
+<ENT,3>
+<PCOMA,>
+<EOF,>

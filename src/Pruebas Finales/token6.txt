@@ -1,0 +1,7 @@
+<ID,0>
+<ASIG,>
+<ID,1>
+<NOTEQ,>
+<ID,2>
+<PCOMA,>
+<EOF,>

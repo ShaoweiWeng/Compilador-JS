@@ -1,0 +1,25 @@
+Tabla Simbolos Local # 1 : 
+ * LEXEMA : 'logico2'
+ATRIBUTOS :
+ + Tipo : 'cadena'
+ + Despl : 0
+----------------------------------------------------------
+ * LEXEMA : 'var'
+ATRIBUTOS :
+ + Tipo : 'entero'
+ + Despl : 64
+----------------------------------------------------------
+Tabla Simbolos Grobal # 0 : 
+ * LEXEMA : 'funcion'
+ATRIBUTOS :
+ + Tipo : 'funcion'
+ + numParam : 1
+ + TipoParam : 'cadena'
+ + TipoRetorno : 'cadena'
+ + EtiqFuncion : 'Et_funcion'
+----------------------------------------------------------
+ * LEXEMA : 'int1'
+ATRIBUTOS :
+ + Tipo : 'entero'
+ + Despl : 1
+----------------------------------------------------------

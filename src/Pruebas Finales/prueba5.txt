@@ -1,0 +1,10 @@
+function funcion string (string logico2)
+{	let var int;
+
+  switch (int1){
+	case 8888: put(0);
+	case 3333: logico2="";
+  }
+  
+  return logico2;
+}

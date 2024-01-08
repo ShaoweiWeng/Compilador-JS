@@ -1,0 +1,14 @@
+Tabla Simbolos Local # 1 : 
+Tabla Simbolos Grobal # 0 : 
+ * LEXEMA : 'i'
+ATRIBUTOS :
+ + Tipo : 'entero'
+ + Despl : 0
+----------------------------------------------------------
+ * LEXEMA : 'a'
+ATRIBUTOS :
+ + Tipo : 'funcion'
+ + numParam : 0
+ + TipoRetorno : 'vacio'
+ + EtiqFuncion : 'Et_a'
+----------------------------------------------------------

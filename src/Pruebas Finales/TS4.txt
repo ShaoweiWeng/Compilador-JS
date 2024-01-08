@@ -1,0 +1,11 @@
+Tabla Simbolos Grobal # 0 : 
+ * LEXEMA : 'a'
+ATRIBUTOS :
+ + Tipo : 'entero'
+ + Despl : 1
+----------------------------------------------------------
+ * LEXEMA : 'b'
+ATRIBUTOS :
+ + Tipo : 'entero'
+ + Despl : 1
+----------------------------------------------------------

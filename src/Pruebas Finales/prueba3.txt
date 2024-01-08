@@ -1,0 +1,5 @@
+let i int;
+i = 5;
+function a void (void) {
+	i = 7;
+}

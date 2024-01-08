@@ -248,6 +248,8 @@ public class AFD {
                                     TablaSimbolos TSG = pilaTS.firstElement();
                                     pos = TSG.getPos();
                                     TSG.insertar(lex);
+                                    TSG.getAtributos(pos).setTipo("entero");
+                                    TSG.getAtributos(pos).setDespl(TSG.getDesp() + 1);
                                 }
                                 Escribir.genToken("ID", pos);
                                 res.setFirst("id");

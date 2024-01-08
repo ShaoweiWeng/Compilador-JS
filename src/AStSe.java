@@ -1199,7 +1199,7 @@ public class AStSe {
     }
 
     private void SemAct57() {
-        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(OK);
+        pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(OK);
     }
 
     private void SemAct58() {
@@ -1215,7 +1215,7 @@ public class AStSe {
     }
 
     private void SemAct59() {
-        pilaAux.elementAt(pilaAux.size() - 2).getSecond().setTipo(OK);
+        pilaAux.elementAt(pilaAux.size() - 1).getSecond().setTipo(OK);
     }
 
     private void SemAct60() {

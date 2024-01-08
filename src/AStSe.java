@@ -320,7 +320,7 @@ public class AStSe {
                     } else { // en caso de error
                         System.err.println("Error en la linea: " + AL.nLineas + " no se esperaba: " + sigTok.getFirst());
                         System.err.println("-------------------------------------"); // Separacion de errores
-                        pila.pop();
+                        break;
                     }
                 } else if ((semActID = accionesSem.get(pila.peek().getFirst())) != null) { // Tratamiento acciones
                                                                                            // semánticas
@@ -337,16 +337,10 @@ public class AStSe {
                     } else { // en caso de error
                         System.err.println("Error en la linea: " + AL.nLineas + " no se esperaba: " + sigTok.getFirst());
                         System.err.println("-------------------------------------"); // Separacion de errores
-                        pila.pop();
-                        if (pila.peek().getFirst().equals("EOF")) {
-                            pila.push(new Pair<String, Atributos>("P", new Atributos()));
-                            sigTok = lector(archivo);
-                        }
+                        break;
                     }
                 }
             }
-            if (!sigTok.getFirst().equals("EOF") || !pilaAux.pop().getFirst().equals("I"))
-                System.err.println("ERROR SEMANTICO"); // Tal vez quitar
         } catch (IOException e) {
             System.err.println("Error de lectura: " + e.getMessage());
         }
@@ -597,8 +591,8 @@ public class AStSe {
     }
 
     private void SemAct2() {
-        pilaAux.elementAt(pilaAux.size() - 4).getSecond()
-                .setTipo(pilaAux.elementAt(pilaAux.size() - 2).getSecond().getTipo());
+        pilaAux.elementAt(pilaAux.size() - 5).getSecond()
+                .setTipo(pilaAux.elementAt(pilaAux.size() - 3).getSecond().getTipo());
         popX(4);
     }
 
@@ -1134,7 +1128,7 @@ public class AStSe {
             F.setTipo(OK);
         else {
             F.setTipo(ERROR);
-            System.err.println("Se esperaban los un valor de retorno del tipo: " + H.getTipo()
+            System.err.println("Se esperaba un valor de retorno del tipo: " + H.getTipo()
                              + " pero la función retorna: " + C.getTipo() + ". En la linea: " + AL.nLineas);
             checkErr = true;
         }

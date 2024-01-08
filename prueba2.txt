@@ -1,5 +1,14 @@
-b=a					    		 	 	 	 	 	 	 	 	 	 	 	 	 	 	 													;
-if (a != b) b = 1;
-a = a - b;
-put a ;
-put b;
+let texto string;
+function pideTexto void (void)
+{
+	put "Introduce una palabra";
+	get texto;
+
+}
+function print void (string msg)
+{
+	put msg;
+}
+pideTexto();
+  print
+	(texto);

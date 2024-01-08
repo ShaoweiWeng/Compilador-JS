@@ -76,7 +76,7 @@ public class AStSe {
     private final String x1[] = { "35", "{35}", "E" };
     private final String x2[] = { "36", "{36}" };
     // B
-    private final String b1[] = { "37", "{38}", ";", "{63}", "T", "id", "{37}", "let" };
+    private final String b1[] = { "37", "{38}", ";", "{63}", "T", "id", "let", "{37}" };
     private final String b2[] = { "38", "{39}", "S", ")", "E", "(", "if" };
     private final String b3[] = { "39", "{40}", "S" };
     private final String b4[] = { "40", "{41}", "}", "G", "{", ")", "E", "(", "switch" };

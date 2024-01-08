@@ -109,7 +109,7 @@ public class AStSe {
     private final String p3[] = { "58" };
 
     // I gramatica aumentada
-    private final String i1[] = { "0", "{62}", "P", "{61}" };
+    private final String i1[] = { "0", "{62}", "P" };
 
     public AStSe(AFD AL) {
         this.AL = AL;
@@ -297,7 +297,7 @@ public class AStSe {
 
         for (int i = 1; i <= 63; i++)
             accionesSem.put("{" + i + "}", i);
-
+        SemAct61();
     }
 
     public void analisis(File file) {
@@ -355,7 +355,7 @@ public class AStSe {
     private Pair<String, Pair<String, Integer>> lector(FileReader archivo) throws IOException {
         int aux;
         Pair<String, Pair<String, Integer>> token;
-        if (AL.reciclar && (token = AL.transicion(this.charLeido)) != null) {
+        if (AL.reciclar && (token = AL.transicion(this.charLeido)).getFirst() != null) {
             AL.reciclar = false;
             return token;
         } else {

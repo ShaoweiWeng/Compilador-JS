@@ -1,2 +1,5 @@
-case 3333: logico2="";
-  }
+b=a					    		 	 	 	 	 	 	 	 	 	 	 	 	 	 	 													;
+if (a != b) b = 1;
+a = a - b;
+put a ;
+put b;

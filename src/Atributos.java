@@ -8,7 +8,7 @@ public class Atributos {
     private String tipoRetorno;
     private String etiqFuncion;
 
-    private String param;
+    private Integer TSid; // id de la tabla de simbolos donde fue añadido el lexema
 
     public String getLex() {
         return lex;
@@ -66,11 +66,11 @@ public class Atributos {
         this.etiqFuncion = etiqFuncion;
     }
 
-    public String getParam() {
-        return param;
+    public Integer getTSid() {
+        return TSid;
     }
 
-    public void setParam(String param) {
-        this.param = param;
+    public void setTSid(Integer TSid) {
+        this.TSid = TSid;
     }
 }

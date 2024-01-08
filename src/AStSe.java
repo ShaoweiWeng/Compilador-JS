@@ -76,7 +76,7 @@ public class AStSe {
     private final String x1[] = { "35", "{35}", "E" };
     private final String x2[] = { "36", "{36}" };
     // B
-    private final String b1[] = { "37", "{38}", ";", "T", "id", "{37}", "let" };
+    private final String b1[] = { "37", "{38}", ";", "{63}", "T", "id", "{37}", "let" };
     private final String b2[] = { "38", "{39}", "S", ")", "E", "(", "if" };
     private final String b3[] = { "39", "{40}", "S" };
     private final String b4[] = { "40", "{41}", "}", "G", "{", ")", "E", "(", "switch" };
@@ -89,8 +89,8 @@ public class AStSe {
     private final String t2[] = { "45", "{46}", "boolean" };
     private final String t3[] = { "46", "{47}", "string" };
     // F
-    private final String f1[] = { "47", "{51}", "}", "C", "{", "{50}", ")", "A", "(", "{49}", "H", "id", "{48}",
-            "function" };
+    private final String f1[] = { "47", "{51}", "}", "C", "{", "{50}", ")", "A", "(", "{49}", "H", "id",
+            "function", "{48}" };
     // H
     private final String h1[] = { "48", "{52}", "T" };
     private final String h2[] = { "49", "{53}", "void" };
@@ -114,10 +114,13 @@ public class AStSe {
     public AStSe(AFD AL) {
         this.AL = AL;
         this.pila = new Stack<>();
+        this.pilaAux = new Stack<>();
         this.tablaDescendente = new HashMap<>();
         pila.push(new Pair<String, Atributos>("EOF", new Atributos()));
         pila.push(new Pair<String, Atributos>("I", new Atributos()));
         this.numParam = 0;
+
+        accionesSem = new HashMap<>();
 
         for (char letra = 'A'; letra <= 'Y'; letra++)
             tablaDescendente.put(String.valueOf(letra), new HashMap<String, String[]>());
@@ -292,32 +295,37 @@ public class AStSe {
         tablaDescendente.get("I").put("id", i1);
         tablaDescendente.get("I").put("EOF", i1);
 
-        for (int i = 1; i <= 62; i++)
+        for (int i = 1; i <= 63; i++)
             accionesSem.put("{" + i + "}", i);
 
     }
 
     public void analisis(File file) {
         try (FileReader archivo = new FileReader(file)) {
-            Pair<String, String> sigTok = lector(archivo);
+            Pair<String, Pair<String, Integer>> sigTok = lector(archivo);
             String[] listPila;
             Integer semActID;
             while (!pila.peek().getFirst().equals("EOF")) {
-                if (!tablaDescendente.containsKey(pila.peek().getFirst())) {
+                if (!tablaDescendente.containsKey(pila.peek().getFirst()) && accionesSem.get(pila.peek().getFirst()) == null) {
                     // Tratamiento de Terminal
                     if (sigTok.getFirst().equals(pila.peek().getFirst())) {
                         pilaAux.push(pila.pop());
-                        if (pila.peek().getFirst().equals("id"))
-                            pilaAux.peek().setFirst(sigTok.getSecond());
+                        if (pilaAux.peek().getFirst().equals("id")){
+                            pilaAux.peek().setFirst(sigTok.getSecond().getFirst()); // anotamos la pos en TS de la id
+                            Atributos atribTSid = pilaAux.peek().getSecond();
+                            atribTSid.setTSid(sigTok.getSecond().getSecond());
+                            pilaAux.peek().setSecond(atribTSid);    // anotamos TSID de la TS de la id
+                        }
                         sigTok = lector(archivo);
                     } else { // en caso de error
-                        System.err.println("Error en la linea: " + AL.nLineas + " no se esperaba: " + sigTok);
+                        System.err.println("Error en la linea: " + AL.nLineas + " no se esperaba: " + sigTok.getFirst());
                         System.err.println("-------------------------------------"); // Separacion de errores
                         pila.pop();
                     }
                 } else if ((semActID = accionesSem.get(pila.peek().getFirst())) != null) { // Tratamiento acciones
                                                                                            // semánticas
-                    execSemAct(semActID);
+                    if (execSemAct(semActID))
+                        break;
                     pila.pop();
                 } else { // Tratamiento de No Terminal
                     if ((listPila = tablaDescendente.get(pila.peek().getFirst()).get(sigTok.getFirst())) != null) {
@@ -327,7 +335,7 @@ public class AStSe {
                             pila.push(new Pair<String, Atributos>(listPila[i], new Atributos()));
                         }
                     } else { // en caso de error
-                        System.err.println("Error en la linea: " + AL.nLineas + " no se esperaba: " + sigTok);
+                        System.err.println("Error en la linea: " + AL.nLineas + " no se esperaba: " + sigTok.getFirst());
                         System.err.println("-------------------------------------"); // Separacion de errores
                         pila.pop();
                         if (pila.peek().getFirst().equals("EOF")) {
@@ -337,17 +345,16 @@ public class AStSe {
                     }
                 }
             }
-            if (!sigTok.getFirst().equals("EOF") || !pilaAux.pop().getFirst().equals("I")) {
-                System.err.println("ERROR SEMANTICO");
-            }
+            if (!sigTok.getFirst().equals("EOF") || !pilaAux.pop().getFirst().equals("I"))
+                System.err.println("ERROR SEMANTICO"); // Tal vez quitar
         } catch (IOException e) {
             System.err.println("Error de lectura: " + e.getMessage());
         }
     }
 
-    private Pair<String, String> lector(FileReader archivo) throws IOException {
+    private Pair<String, Pair<String, Integer>> lector(FileReader archivo) throws IOException {
         int aux;
-        Pair<String, String> token;
+        Pair<String, Pair<String, Integer>> token;
         if (AL.reciclar && (token = AL.transicion(this.charLeido)) != null) {
             AL.reciclar = false;
             return token;
@@ -359,14 +366,14 @@ public class AStSe {
                 if (caracter.equals("\n"))
                     AL.nLineas++;
 
-                if ((token = AL.transicion(caracter)) != null) {
+                if ((token = AL.transicion(caracter)).getFirst() != null) {
                     this.charLeido = caracter;
                     return token;
                 }
             }
         }
         Escribir.genToken(Escribir.EOF); // Genera token fin de fichero
-        return new Pair<String, String>("EOF", null);
+        return new Pair<String, Pair<String, Integer>>("EOF", new Pair<String, Integer>(null, null));
     }
 
     private void popX(int x) {
@@ -375,7 +382,20 @@ public class AStSe {
         }
     }
 
-    private void execSemAct(int semActID) {
+    private Atributos idAtrib(int num){
+        Integer pos = Integer.parseInt(pilaAux.elementAt(pilaAux.size() - num).getFirst());
+        Integer tablaID = pilaAux.elementAt(pilaAux.size() - num).getSecond().getTSid();
+
+        if (tablaID==0)
+            return AL.pilaTS.firstElement().getAtributos(pos);
+        else {
+            //if (AL.pilaTS.peek().getTSID()==tablaID)
+                return AL.pilaTS.peek().getAtributos(pos);
+        }
+    }
+
+    private boolean execSemAct(int semActID) {
+        boolean checkErr = false;
         switch (semActID) {
             case 1:
                 SemAct1();
@@ -387,13 +407,13 @@ public class AStSe {
                 SemAct3();
                 break;
             case 4:
-                SemAct4();
+                checkErr = SemAct4();
                 break;
             case 5:
-                SemAct5();
+                checkErr = SemAct5();
                 break;
             case 6:
-                SemAct6();
+                checkErr = SemAct6();
                 break;
             case 7:
                 SemAct7();
@@ -402,49 +422,49 @@ public class AStSe {
                 SemAct8();
                 break;
             case 9:
-                SemAct9();
+                checkErr = SemAct9();
                 break;
             case 10:
-                SemAct10();
+                checkErr = SemAct10();
                 break;
             case 11:
                 SemAct11();
                 break;
             case 12:
-                SemAct12();
+                checkErr = SemAct12();
                 break;
             case 13:
-                SemAct13();
+                checkErr = SemAct13();
                 break;
             case 14:
                 SemAct14();
                 break;
             case 15:
-                SemAct15();
+                checkErr = SemAct15();
                 break;
             case 16:
-                SemAct16();
+                checkErr = SemAct16();
                 break;
             case 17:
-                SemAct17();
+                checkErr = SemAct17();
                 break;
             case 18:
                 SemAct18();
                 break;
             case 19:
-                SemAct19();
+                checkErr = SemAct19();
                 break;
             case 20:
-                SemAct20();
+                checkErr = SemAct20();
                 break;
             case 21:
-                SemAct21();
+                checkErr = SemAct21();
                 break;
             case 22:
                 SemAct22();
                 break;
             case 23:
-                SemAct23();
+                checkErr = SemAct23();
                 break;
             case 24:
                 SemAct24();
@@ -468,13 +488,13 @@ public class AStSe {
                 SemAct30();
                 break;
             case 31:
-                SemAct31();
+                checkErr = SemAct31();
                 break;
             case 32:
                 SemAct32();
                 break;
             case 33:
-                SemAct33();
+                checkErr = SemAct33();
                 break;
             case 34:
                 SemAct34();
@@ -492,16 +512,16 @@ public class AStSe {
                 SemAct38();
                 break;
             case 39:
-                SemAct39();
+                checkErr = SemAct39();
                 break;
             case 40:
                 SemAct40();
                 break;
             case 41:
-                SemAct41();
+                checkErr = SemAct41();
                 break;
             case 42:
-                SemAct42();
+                checkErr = SemAct42();
                 break;
             case 43:
                 SemAct43();
@@ -528,7 +548,7 @@ public class AStSe {
                 SemAct50();
                 break;
             case 51:
-                SemAct51();
+                checkErr = SemAct51();
                 break;
             case 52:
                 SemAct52();
@@ -563,7 +583,11 @@ public class AStSe {
             case 62:
                 SemAct62();
                 break;
+            case 63:
+                SemAct63();
+                break;
         }
+        return checkErr;
     }
 
     private void SemAct1() {
@@ -587,8 +611,8 @@ public class AStSe {
     private boolean SemAct4() {
         boolean checkErr = false;
         Atributos J = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
-        Atributos id = AL.pilaTS.peek()
-                .getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
+        Atributos id = idAtrib(2);
+        //Atributos id = AL.pilaTS.peek().getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
         Atributos S = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
 
         if (id.getTipo().equals(FUNC)) {
@@ -630,8 +654,8 @@ public class AStSe {
 
     private boolean SemAct6() {
         boolean checkErr = false;
-        Atributos id = AL.pilaTS.peek()
-                .getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
+        Atributos id = idAtrib(2);
+        //Atributos id = AL.pilaTS.peek().getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
         Atributos S = pilaAux.elementAt(pilaAux.size() - 4).getSecond();
 
         if (id.getTipo().equals(ENT) || id.getTipo().equals(CAD))
@@ -848,8 +872,8 @@ public class AStSe {
     private boolean SemAct23() {
         boolean checkErr = false;
         Atributos Y = pilaAux.elementAt(pilaAux.size() - 1).getSecond();
-        Atributos id = AL.pilaTS.peek()
-                .getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
+        Atributos id = idAtrib(2);
+        //Atributos id = AL.pilaTS.peek().getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 2).getFirst()));
         Atributos V = pilaAux.elementAt(pilaAux.size() - 3).getSecond();
 
         if (id.getTipo().equals(FUNC)) {
@@ -974,7 +998,7 @@ public class AStSe {
         Atributos id = TSAct.getAtributos(Integer.parseInt(pilaAux.elementAt(pilaAux.size() - 3).getFirst()));
         Atributos B = pilaAux.elementAt(pilaAux.size() - 5).getSecond();
 
-        AL.zonaDecl = false;
+        //AL.zonaDecl = false;
         B.setTipo(OK);
         id.setTipo(T.getTipo());
         id.setDespl(TSAct.getDesp());
@@ -1115,8 +1139,7 @@ public class AStSe {
             checkErr = true;
         }
 
-        TablaSimbolos ts = AL.pilaTS.pop();
-        Escribir.printTS(ts.getTSID(), ts.getEntrys().entrySet());
+        Escribir.printTS(AL.pilaTS.pop());
         popX(9);
         return checkErr;
     }
@@ -1206,8 +1229,11 @@ public class AStSe {
     }
 
     private void SemAct62() {
-        TablaSimbolos ts = AL.pilaTS.pop();
-        Escribir.printTS(ts.getTSID(), ts.getEntrys().entrySet());
+        Escribir.printTS(AL.pilaTS.pop());
         popX(1);
+    }
+
+    private void SemAct63() {
+        AL.zonaDecl = false;
     }
 }

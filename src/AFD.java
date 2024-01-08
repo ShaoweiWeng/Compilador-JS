@@ -150,8 +150,8 @@ public class AFD {
      * @param caracter Caracter leido del fichero utilizado para la transicion de
      *                 estados
      */
-    public Pair<String, String> transicion(String caracter) {
-        Pair<String, String> res = new Pair<String, String>(null, null);
+    public Pair<String, Pair<String, Integer>> transicion(String caracter) {
+        Pair<String, Pair<String, Integer>> res = new Pair<String, Pair<String,Integer>>(null, new Pair<String,Integer>(null, null));
         String estadoFuturo, estadoActualAux;
         if ((estadoFuturo = tablaTransiciones.get(estadoActual).get(caracter)) == null) {
             gestorErr(caracter);
@@ -198,7 +198,9 @@ public class AFD {
                         else {
                             Escribir.genToken("CADENA", lex);
                             res.setFirst("cad");
-                            res.setSecond(lex);
+                            Pair<String, Integer> auxPair = res.getSecond();
+                            auxPair.setFirst(lex);
+                            res.setSecond(auxPair);
                         }
                         this.estadoActual = "S";
                         break;
@@ -218,11 +220,14 @@ public class AFD {
                                     pilaTS.peek().insertar(lex);
                                     Escribir.genToken("ID", pos);
                                     res.setFirst("id");
-                                    res.setSecond("" + pos);
+                                    Pair<String, Integer> auxPair = res.getSecond();
+                                    auxPair.setFirst(""+pos);
+                                    auxPair.setSecond(pilaTS.peek().getTSID());
+                                    res.setSecond(auxPair);
                                 }
                             } else {
                                 boolean encontrado = false;
-                                TablaSimbolos TS;
+                                TablaSimbolos TS = pilaTS.peek();
                                 for (int i = pilaTS.size()-1; i >= 0 && !encontrado ; i--) {
                                     TS = pilaTS.elementAt(i);
                                     pos = TS.getID(lex);
@@ -237,6 +242,7 @@ public class AFD {
                                         break;
                                     }
                                 }*/
+
                                 if (!encontrado) { // Si no se ha encontrado es decir que tenemos una declaracion
                                                    // implicita
                                     TablaSimbolos TSG = pilaTS.firstElement();
@@ -245,7 +251,10 @@ public class AFD {
                                 }
                                 Escribir.genToken("ID", pos);
                                 res.setFirst("id");
-                                res.setSecond("" + pos);
+                                Pair<String, Integer> auxPair = res.getSecond();
+                                auxPair.setSecond(TS.getTSID());
+                                auxPair.setFirst(""+pos);
+                                res.setSecond(auxPair);
                             }
                             this.estadoActual = "S";
                         }
@@ -257,7 +266,9 @@ public class AFD {
                         else {
                             Escribir.genToken("ENT", this.num);
                             res.setFirst("ent");
-                            res.setSecond("" + this.num);
+                            Pair<String, Integer> auxPair = res.getSecond();
+                            auxPair.setFirst(""+this.num);
+                            res.setSecond(auxPair);
                         }
                         this.estadoActual = "S";
                         reciclar = !dels.contains(caracter); // Si no es un delimitador, reciclar = true
@@ -318,7 +329,7 @@ public class AFD {
     private void gestorErr(String caso) {
         switch (caso) {
             case "DUPID":
-                System.err.println("Doble declaracion de la misma variable en la linea " + (this.nLineas - 1));
+                System.err.println("Doble declaracion de la misma variable en la linea " + (this.nLineas));
                 //System.err.println("Doble declaracion de la variable " + lex + " en la linea " + (this.nLineas - 1)); //Sugerencia
                 break;
             case "MAXCAD":

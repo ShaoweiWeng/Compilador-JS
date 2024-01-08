@@ -52,8 +52,4 @@ public class TablaSimbolos {
     public Integer getTSID() {
         return TSID;
     }
-
-    public void setTSID(Integer TSID) {
-        this.TSID = TSID;
-    }
 }

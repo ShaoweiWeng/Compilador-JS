@@ -1,0 +1,81 @@
+Terminales = { boolean break case function get if int let put return switch void ent cad string id *= = , ; : ( ) { } + - && || != == default true false Lambda EOF}
+NoTerminales = { W H Y L D V T Q X  S U K C E R B G F O N M P I  J A }
+Axioma = I
+Producciones = {
+J -> = E ;
+J -> ( L ) ;
+J -> *= E ;
+S -> id J
+S -> put E ; 
+S -> get id ; 
+S -> return X ;
+S -> break ;
+
+E -> R N
+N -> || R N
+N -> Lambda
+
+R -> U M
+M -> && U M
+M -> Lambda
+
+U -> D O
+O -> == D O 
+O -> != D O
+O -> Lambda
+
+D -> V W
+W -> + V W
+W -> - V W
+W -> Lambda
+
+V -> id Y
+Y -> ( L ) 
+Y -> Lambda
+V -> ( E ) 
+V ->  ent 
+V -> cad  
+V -> false 
+V -> true
+
+L -> E Q 
+L -> Lambda
+
+Q -> , E Q  
+Q -> Lambda
+
+X -> E 
+X -> Lambda
+
+B -> let id T ;
+B -> if ( E ) S 
+B -> S
+B -> switch ( E ) { G }
+
+G -> case ent : C G
+G -> default : C  
+G -> Lambda
+
+T -> int 
+T -> boolean  
+T -> string
+
+F -> function id H ( A ) { C }
+
+H -> T 
+H -> void
+
+A -> T id K 
+A -> void
+
+K -> , T id K 
+K -> Lambda
+
+C -> B C 
+C -> Lambda
+
+P -> B P
+P -> F P  
+P -> Lambda
+I -> P
+}

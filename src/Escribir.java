@@ -4,8 +4,7 @@ import java.util.Map.Entry;
 
 public class Escribir {
 
-    // ---------------------------------------------------- tokens
-    // ----------------------------------------------------
+    // ---------------------------------------------------- tokens ----------------------------------------------------
     public static final String tokens[] = { "<COMA,>\n", "<PCOMA,>\n", "<PP,>\n", "<PARIZ,>\n", "<PARDE,>\n",
             "<LLAVEIZ,>\n", "<LLAVEDE,>\n", "<SUM,>\n", "<RES,>\n", "<MULA,>\n", "<EQUAL,>\n", "<NOTEQ,>\n", "<AND,>\n",
             "<OR,>\n" };
@@ -63,8 +62,7 @@ public class Escribir {
     }
 
     /**
-     * --------------------------------- printTS
-     * ------------------------------------
+     * --------------------------------- printTS ------------------------------------
      * Volcado completo "legible" con toda la informacion de la tabla de simbolos.
      * 
      * @param numTs   El ID de la tabla de simbolos.

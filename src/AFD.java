@@ -4,8 +4,7 @@ import java.util.Stack;
 
 public class AFD {
 
-    // ------------------------------------------------------- Atributos
-    // -------------------------------------------------------
+    // ------------------------------------------------------- Atributos -------------------------------------------------------
     private HashMap<String, HashMap<String, String>> tablaTransiciones; // mapa con estado y sus posibles estados
                                                                         // siguientes
     public Stack<TablaSimbolos> pilaTS; // tablas de simbolos siendo la TSAct la cima de la pila
@@ -140,8 +139,7 @@ public class AFD {
     }
 
     /**
-     * ----------------------------------- transicion
-     * ------------------------------------
+     * ----------------------------------- transicion ------------------------------------
      * Analiza el caracter leido y realiza la transicion del automata, si es una
      * transicion invalida (es decir no existe dicha transicion desde un estado 'a'
      * hasta
@@ -235,14 +233,6 @@ public class AFD {
                                         encontrado = true;
                                     }
                                 }
-                                /*for (TablaSimbolos TS : pilaTS) { //En qué orden va este for-Each?? deberia primero local y luego global
-                                    pos = TS.getID(lex);
-                                    if (pos != null) {
-                                        encontrado = true;
-                                        break;
-                                    }
-                                }*/
-
                                 if (!encontrado) { // Si no se ha encontrado es decir que tenemos una declaracion
                                                    // implicita
                                     TablaSimbolos TSG = pilaTS.firstElement();
@@ -320,8 +310,7 @@ public class AFD {
     }
 
     /**
-     * ----------------------------------- gestorErr
-     * ------------------------------------
+     * ----------------------------------- gestorErr ------------------------------------
      * Lanza el mensaje de error correspondiente (indicada por el parametro que le
      * han
      * pasado) por la salida de error estandar.
